@@ -57,11 +57,12 @@ const REGION_MAP = {
   제주특별자치도: "제주", 제주도: "제주",
 };
 
-// 핫이슈 RSS 피드 (확인 필요: 각 언론사 공식 RSS 주소로 검증/교체)
+// 핫이슈 RSS 피드 (2026.06 응답 확인). filter가 있으면 제목에 해당 키워드 포함분만 채택.
+const RE_ESTATE = /분양|청약|재건축|재개발|아파트|부동산|오피스텔|입주|매매|전세|집값|주택|시행|시공/;
 const RSS_FEEDS = [
   { source: "한국경제", tag: "부동산", url: "https://www.hankyung.com/feed/realestate" },
-  // { source: "연합뉴스", tag: "경제",   url: "https://www.yna.co.kr/rss/economy.xml" },
-  // { source: "매일경제", tag: "부동산", url: "https://www.mk.co.kr/rss/50300009/" },
+  { source: "경향신문", tag: "부동산", url: "https://www.khan.co.kr/rss/rssdata/economy_news.xml", filter: RE_ESTATE },
+  // 매경·연합은 봇 차단(403)으로 미사용 — 필요 시 네이버 뉴스 검색 API로 대체(확인 필요).
 ];
 
 function normRegion(v) { return REGION_MAP[v] || (v ? String(v).replace(/(특별|광역)?시$|도$/, "") : "기타"); }
@@ -117,31 +118,45 @@ function mapApplyRow(r) {
   };
 }
 
-// 아주 단순한 RSS <item> 파서 (의존성 없이)
-function parseRSS(xml, source, tag) {
+// pubDate(RFC822) → YYYY-MM-DD
+function normDate(s) {
+  if (!s) return "";
+  const d = new Date(s);
+  return isNaN(d) ? s.slice(0, 16) : d.toISOString().slice(0, 10);
+}
+
+// 의존성 없는 RSS <item> 파서
+function parseRSS(xml, feed) {
   const items = [];
   const blocks = xml.split(/<item[\s>]/i).slice(1);
-  for (const b of blocks.slice(0, 8)) {
+  for (const b of blocks) {
     const pick = (re) => { const m = b.match(re); return m ? m[1].replace(/<!\[CDATA\[|\]\]>/g, "").trim() : ""; };
     const title = pick(/<title>([\s\S]*?)<\/title>/i);
     const link = pick(/<link>([\s\S]*?)<\/link>/i);
     const date = pick(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-    if (title) items.push({ source, tag, title, link, date: (date || "").slice(0, 16) });
+    if (!title) continue;
+    if (feed.filter && !feed.filter.test(title)) continue; // 키워드 필터
+    items.push({ source: feed.source, tag: feed.tag, title, link, date: normDate(date) });
   }
   return items;
 }
 
 async function fetchNews() {
-  const out = [];
+  let out = [];
   for (const f of RSS_FEEDS) {
     try {
-      const res = await fetch(f.url);
+      const res = await fetch(f.url, { headers: { "User-Agent": "Mozilla/5.0 (newsletter-bot)" } });
       if (!res.ok) throw new Error("HTTP " + res.status);
-      out.push(...parseRSS(await res.text(), f.source, f.tag));
+      out.push(...parseRSS(await res.text(), f));
+      console.log("  RSS " + f.source + ": " + out.length + "건 누적");
     } catch (e) {
       console.warn("  RSS 실패(" + f.source + "): " + e.message);
     }
   }
+  // 제목 중복 제거 → 최신순 정렬 → 상위 8건
+  const seen = {};
+  out = out.filter((n) => (seen[n.title] ? false : (seen[n.title] = true)));
+  out.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
   return out.slice(0, 8);
 }
 
@@ -162,8 +177,9 @@ function write(file, obj) {
 (async function main() {
   const seed = loadSeed();
   const now = new Date().toISOString();
-  let projects, source, news;
+  let projects, source;
 
+  // 분양 일정·세대수: 청약홈 키가 있으면 실수집, 없으면 시드
   if (SERVICE_KEY) {
     console.log("청약홈 OpenAPI 수집 (" + YEAR + ")…");
     try {
@@ -178,14 +194,15 @@ function write(file, obj) {
       console.warn("OpenAPI 실패 → 시드로 대체: " + e.message);
       projects = seed.projects; source = "시드 데이터 (비즈워치/각사 IR)";
     }
-    news = await fetchNews();
   } else {
-    console.log("APPLYHOME_SERVICE_KEY 미설정 → 시드 데이터로 산출(fallback).");
+    console.log("APPLYHOME_SERVICE_KEY 미설정 → 분양 데이터는 시드 사용.");
     projects = seed.projects; source = "시드 데이터 (비즈워치/각사 IR, 2026.02 기준)";
-    news = [];
   }
 
-  if (!news || !news.length) news = seed.news; // RSS 비었으면 시드 샘플
+  // 핫이슈: RSS는 키 불필요 — 항상 실수집
+  console.log("RSS 핫이슈 수집…");
+  let news = await fetchNews();
+  if (!news.length) { console.warn("  RSS 0건 → 시드 샘플 사용"); news = seed.news; }
 
   write("projects.json", { generatedAt: now, source, projects });
   write("news.json", { generatedAt: now, items: news });

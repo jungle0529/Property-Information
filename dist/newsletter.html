@@ -201,6 +201,7 @@ table.supply tr.h2row td:first-child { box-shadow: inset 3px 0 0 var(--hl); }
   margin-top: 14px; font-size: 12.5px; color: var(--warn); background: #fdf6ec;
   border: 1px solid #f3e2c7; border-radius: 8px; padding: 10px 12px;
 }
+.note.live { color: var(--hl); background: var(--hl-soft); border-color: #cde7d8; }
 
 /* ── 집뷰 CTA ──────────────────────────────── */
 .cta { background: var(--accent); color: #fff; border-radius: 14px; padding: 34px 30px; margin: 8px 0; }
@@ -327,9 +328,9 @@ footer.site b { color: var(--text); }
         <span class="desc">정식 운영 시 언론사 RSS·뉴스 API 자동 수집 영역</span>
       </div>
       <div class="news" id="news-list"></div>
-      <div class="note">
-        ⚠ 아래 헤드라인은 <b>피드 구조 예시(샘플)</b>입니다. 실제 운영에서는 연합뉴스·한경·매경·비즈워치 등의
-        <b>RSS</b> 또는 네이버 뉴스 검색 API로 자동 수집을 권장합니다. (호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)
+      <div class="note" id="news-note">
+        ⚠ 아래 헤드라인은 <b>피드 구조 예시(샘플)</b>입니다. 실제 운영에서는 한경·경향 등의
+        <b>RSS</b>로 자동 수집됩니다. (호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)
       </div>
     </div>
   </section>
@@ -693,6 +694,17 @@ window.NEWS_FEED = [
         '<div>' + title +
         '<div class="nmeta">' + esc(n.source || "") + (n.date ? ' · ' + esc(n.date) : '') + '</div></div></div>';
     }).join("");
+
+    // 실데이터(원문 링크 보유) 여부로 안내 문구 전환
+    var note = document.getElementById("news-note");
+    if (note) {
+      var live = NEWS.some(function (n) { return n.link; });
+      if (live) {
+        note.classList.add("live");
+        note.innerHTML = "✓ 한경·경향 <b>RSS 자동수집</b> 결과입니다(매시간 갱신). 제목 클릭 시 원문으로 이동합니다. " +
+          "(호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)";
+      }
+    }
   }
 
   function esc(s) {

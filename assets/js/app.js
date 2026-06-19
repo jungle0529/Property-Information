@@ -172,6 +172,17 @@
         '<div>' + title +
         '<div class="nmeta">' + esc(n.source || "") + (n.date ? ' · ' + esc(n.date) : '') + '</div></div></div>';
     }).join("");
+
+    // 실데이터(원문 링크 보유) 여부로 안내 문구 전환
+    var note = document.getElementById("news-note");
+    if (note) {
+      var live = NEWS.some(function (n) { return n.link; });
+      if (live) {
+        note.classList.add("live");
+        note.innerHTML = "✓ 한경·경향 <b>RSS 자동수집</b> 결과입니다(매시간 갱신). 제목 클릭 시 원문으로 이동합니다. " +
+          "(호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)";
+      }
+    }
   }
 
   function esc(s) {

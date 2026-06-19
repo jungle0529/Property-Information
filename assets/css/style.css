@@ -189,6 +189,7 @@ table.supply tr.h2row td:first-child { box-shadow: inset 3px 0 0 var(--hl); }
   margin-top: 14px; font-size: 12.5px; color: var(--warn); background: #fdf6ec;
   border: 1px solid #f3e2c7; border-radius: 8px; padding: 10px 12px;
 }
+.note.live { color: var(--hl); background: var(--hl-soft); border-color: #cde7d8; }
 
 /* ── 집뷰 CTA ──────────────────────────────── */
 .cta { background: var(--accent); color: #fff; border-radius: 14px; padding: 34px 30px; margin: 8px 0; }

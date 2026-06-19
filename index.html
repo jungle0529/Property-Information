@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>집뷰 분양 인사이트 | 2026 하반기 분양 사업지 브리핑</title>
+  <meta name="description" content="올림플래닛 집뷰 세일즈 참고용 분양 정보 뉴스레터 — 2026 하반기 분양 사업지·건설사별 공급계획·시황 핫이슈 요약." />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- 상단 유틸바 -->
+  <div class="topbar">
+    <div class="wrap">
+      <span>올림플래닛 <strong>집뷰(ZIPVIEW)</strong> 세일즈 인사이트 · 내부 참고용</span>
+      <span>발행일 <strong id="today">—</strong></span>
+    </div>
+  </div>
+
+  <!-- 헤더 -->
+  <header class="site">
+    <div class="wrap">
+      <div class="brand">
+        <span class="logo">집뷰 <span>분양 인사이트</span></span>
+        <span class="tag">Real Estate Pre-sale Briefing</span>
+      </div>
+      <nav class="main">
+        <a href="#h2">하반기 분양</a>
+        <a href="#builders">건설사별 공급</a>
+        <a href="#news">핫이슈</a>
+        <a href="#cta">집뷰 세일즈</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 히어로 -->
+  <div class="hero">
+    <div class="wrap">
+      <span class="kicker">2026 하반기(H2) 분양 브리핑</span>
+      <h1>다음에 팔릴 단지를 미리 봅니다.<br />집뷰 영업이 먼저 닿는 분양 인사이트.</h1>
+      <p class="lead">
+        시행사·시공사·광고대행사가 한눈에 보는 하반기 분양 사업지 요약입니다. 건설사별 공급계획과
+        시황 핫이슈를 정리하고, 각 단지에 집뷰(사이버 모델하우스·3D 공간 마케팅)를 어떻게 제안할지
+        세일즈 포인트까지 붙였습니다.
+      </p>
+      <div class="meta">자료: 비즈워치(B!z watch) 인포그래픽 · 각사 IR/보도자료(2026.02 기준) · 추정치로 변동 가능</div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="num" id="kpi-projects">—</div><div class="lbl">하반기 분양 단지 수</div></div>
+        <div class="kpi"><div class="num" id="kpi-general">—</div><div class="lbl">하반기 일반분양 (가구)</div></div>
+        <div class="kpi"><div class="num" id="kpi-house">—</div><div class="lbl">하반기 총 공급 (가구)</div></div>
+        <div class="kpi"><div class="num" id="kpi-builders">—</div><div class="lbl">참여 공급주체 수</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하반기 분양 사업지 -->
+  <section class="block" id="h2">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>하반기 분양 사업지</h2>
+        <span class="desc"><b id="result-count">—</b> · 카드 좌측 그린 라인 = 하반기(H2) 단지</span>
+      </div>
+
+      <div class="filters">
+        <div class="grp"><span class="flabel">시기</span><span id="f-half"></span></div>
+      </div>
+      <div class="filters">
+        <div class="grp"><span class="flabel">공급주체</span><span id="f-builder"></span></div>
+      </div>
+      <div class="filters">
+        <div class="grp"><span class="flabel">권역</span><span id="f-region"></span></div>
+      </div>
+
+      <div class="grid" id="card-grid"></div>
+    </div>
+  </section>
+
+  <!-- 건설사별 공급계획 -->
+  <section class="block" id="builders">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>건설사별 2026 공급계획 (전체)</h2>
+        <span class="desc">행 좌측 그린 표시 = 하반기 분양 · 클릭하여 펼치기</span>
+      </div>
+      <div id="by-builder"></div>
+    </div>
+  </section>
+
+  <!-- 핫이슈 / 뉴스 -->
+  <section class="block" id="news">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>분양 시황 · 핫이슈</h2>
+        <span class="desc">정식 운영 시 언론사 RSS·뉴스 API 자동 수집 영역</span>
+      </div>
+      <div class="news" id="news-list"></div>
+      <div class="note">
+        ⚠ 아래 헤드라인은 <b>피드 구조 예시(샘플)</b>입니다. 실제 운영에서는 연합뉴스·한경·매경·비즈워치 등의
+        <b>RSS</b> 또는 네이버 뉴스 검색 API로 자동 수집을 권장합니다. (호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)
+      </div>
+    </div>
+  </section>
+
+  <!-- 집뷰 세일즈 CTA -->
+  <section class="block" id="cta">
+    <div class="wrap">
+      <div class="cta">
+        <h2>이 단지들, 집뷰로 어떻게 제안하나요?</h2>
+        <p>
+          하반기 분양은 모델하우스 운영비·대기 동선·원거리 수요 설득이 관건입니다. 집뷰의 사이버 모델하우스와
+          3D 공간 마케팅을 타겟별로 이렇게 제안합니다. (제품 세부 사양·표현은 확인 필요)
+        </p>
+        <div class="targets">
+          <div class="t"><h4>시행사 (Developer)</h4><p>분양 일정 전 사전 마케팅·예비청약자 데이터 확보. 분양가 발표 전 단지 가치 선(先)노출.</p></div>
+          <div class="t"><h4>시공사 (Constructor)</h4><p>브랜드 단지 품질을 3D로 시각화. 조합원·일반분양 동시 비대면 설명으로 운영 효율↑.</p></div>
+          <div class="t"><h4>광고대행사 (Agency)</h4><p>모델하우스 제작 대비 비용·기간 절감. 온라인 캠페인·랜딩과 즉시 연동되는 콘텐츠.</p></div>
+        </div>
+        <p style="margin-top:18px;">관심 단지를 정하면 집뷰 제안서·견적 협의를 바로 시작할 수 있습니다.</p>
+        <a class="btn" href="#h2">하반기 타겟 단지 보러가기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="site">
+    <div class="wrap">
+      <div class="ft-top">
+        <div class="src">
+          <b>데이터 출처 &amp; 갱신 정책</b><br />
+          · 공급계획(시기·세대수): 비즈워치 인포그래픽 + 각사 IR/보도자료 (분기 수기 갱신)<br />
+          · 권장 자동화 백본: 한국부동산원 <b>청약홈 분양정보 OpenAPI</b>(공공데이터포털) — 일정·세대수<br />
+          · 시세/실거래: 국토부 <b>실거래가 공개 OpenAPI</b> · 핫이슈: 언론사 <b>RSS</b>/뉴스 API<br />
+          · 모든 수치는 추정치로 <b>변동 가능</b>하며, 외부 공유 시 대외비·미공개 IR 정보 포함 여부를 검토하세요.
+        </div>
+        <div>
+          <b>집뷰 분양 인사이트</b><br />
+          올림플래닛 내부 세일즈 참고용<br />
+          ⓒ 2026 Olimplanet
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

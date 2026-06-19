@@ -1,0 +1,141 @@
+/**
+ * 2026년 건설사별·지역별 분양 공급계획 시드 데이터
+ * 출처: 비즈워치(B!z watch) 인포그래픽 / 각사 IR·보도자료 (2026.02 기준)
+ * ※ 추정치이며 변동 가능. 정식 운영 시 청약홈 OpenAPI로 일정·세대수 자동 동기화 권장.
+ *
+ * 필드 정의
+ *  - builder : 공급 주체(건설사/지역 묶음)
+ *  - period  : 분양 시기 라벨 ("9월", "3분기", "상반기", "미정" 등)
+ *  - region  : 광역 권역(서울/경기/인천/부산 등) — best-effort 태깅
+ *  - project : 사업지명
+ *  - general : 일반분양 가구수
+ *  - total   : 총가구(세대)수
+ */
+window.SUPPLY_DATA = [
+  // ── 서울 주요단지 (서울시) ──────────────────────────────
+  { builder: "서울 주요단지", period: "1월",  region: "서울", project: "드파인 연희",            general: 735,  total: 2568 },
+  { builder: "서울 주요단지", period: "1월",  region: "서울", project: "아크로 드 서초",          general: 56,   total: 1161 },
+  { builder: "서울 주요단지", period: "1월",  region: "서울", project: "더샵 신풍역",             general: 312,  total: 2030 },
+  { builder: "서울 주요단지", period: "2월",  region: "서울", project: "래미안 엘라비네",          general: 280,  total: 557 },
+  { builder: "서울 주요단지", period: "3월",  region: "서울", project: "장위10구역",             general: 1170, total: 1931 },
+  { builder: "서울 주요단지", period: "3월",  region: "서울", project: "흑석11구역",             general: 424,  total: 1515 },
+  { builder: "서울 주요단지", period: "1분기", region: "서울", project: "노량진6구역",             general: 369,  total: 1499 },
+  { builder: "서울 주요단지", period: "4월",  region: "서울", project: "노량진8구역",             general: 289,  total: 987 },
+  { builder: "서울 주요단지", period: "5월",  region: "서울", project: "신림2구역",              general: 1246, total: 1430 },
+  { builder: "서울 주요단지", period: "6월",  region: "서울", project: "써밋 클라비온",           general: 174,  total: 812 },
+  { builder: "서울 주요단지", period: "8월",  region: "서울", project: "고덕 강일 3단지",         general: 215,  total: 715 },
+  { builder: "서울 주요단지", period: "9월",  region: "서울", project: "디에이치 반포 클래스트",    general: 1803, total: 5007 },
+  { builder: "서울 주요단지", period: "9월",  region: "서울", project: "노량진5구역",             general: 284,  total: 727 },
+  { builder: "서울 주요단지", period: "3분기", region: "서울", project: "중계본동 재개발",          general: 1353, total: 3178 },
+  { builder: "서울 주요단지", period: "11월", region: "서울", project: "금호16구역",             general: 57,   total: 595 },
+
+  // ── 삼성물산 건설부문 ───────────────────────────────────
+  { builder: "삼성물산", period: "2월",  region: "서울", project: "래미안 엘라비네",     general: 276, total: 557 },
+  { builder: "삼성물산", period: "12월", region: "서울", project: "래미안 마크더스위트",  general: 87,  total: 504 },
+
+  // ── 현대건설 ───────────────────────────────────────────
+  { builder: "현대건설", period: "2월",  region: "경기", project: "평택고덕 A31·34·35BL",         general: 1082, total: 1082 },
+  { builder: "현대건설", period: "3월",  region: "경남", project: "양산물금 공동주택",             general: 600,  total: 600 },
+  { builder: "현대건설", period: "3월",  region: "인천", project: "인천산곡6",                   general: 521,  total: 1028 },
+  { builder: "현대건설", period: "4월",  region: "경남", project: "진주이현1-5",                 general: 178,  total: 464 },
+  { builder: "현대건설", period: "6월",  region: "부산", project: "부산범천 1-1구역",            general: 665,  total: 1321 },
+  { builder: "현대건설", period: "상반기", region: "경기", project: "복정역세권 복합시설용지 오피스텔", general: 1403, total: 1403 },
+  { builder: "현대건설", period: "상반기", region: "인천", project: "시티오씨엘 9단지",            general: 604,  total: 604 },
+  { builder: "현대건설", period: "9월",  region: "서울", project: "디에이치 클래스트(반포 1·2·4주구)", general: 1803, total: 4765 },
+  { builder: "현대건설", period: "10월", region: "제주", project: "제주 이도주공",               general: 105,  total: 867 },
+  { builder: "현대건설", period: "11월", region: "서울", project: "금호16구역",                 general: 57,   total: 475 },
+
+  // ── 대우건설 ───────────────────────────────────────────
+  { builder: "대우건설", period: "3월", region: "충북", project: "청주 미평동 공동주택",          general: 1351, total: 1351 },
+  { builder: "대우건설", period: "3월", region: "서울", project: "서울 흑석11구역 재개발",        general: 424,  total: 1515 },
+  { builder: "대우건설", period: "3월", region: "서울", project: "서울 장위10구역 재개발",        general: 1031, total: 1931 },
+  { builder: "대우건설", period: "4월", region: "경남", project: "거제 장평동 공동주택",          general: 423,  total: 423 },
+  { builder: "대우건설", period: "5월", region: "서울", project: "서울 신림2구역 재개발",         general: 519,  total: 744 },
+  { builder: "대우건설", period: "5월", region: "인천", project: "인천 검암 S3블록 민간참여",     general: 749,  total: 382 },
+  { builder: "대우건설", period: "5월", region: "인천", project: "인천 검암 B1블록 민간참여",     general: 441,  total: 225 },
+  { builder: "대우건설", period: "6월", region: "경기", project: "김포한강시네폴리스 주상복합 아파트", general: 2432, total: 2432 },
+  { builder: "대우건설", period: "6월", region: "경기", project: "김포한강시네폴리스 주상복합 오피스텔", general: 250, total: 250 },
+  { builder: "대우건설", period: "6월", region: "서울", project: "서울 신길10구역 재건축",        general: 174,  total: 812 },
+  { builder: "대우건설", period: "7월", region: "충남", project: "천안 성정동 공동주택",          general: 1438, total: 1438 },
+  { builder: "대우건설", period: "8월", region: "경기", project: "수원 팔달115-3구역 재개발",     general: 454,  total: 585 },
+  { builder: "대우건설", period: "9월", region: "서울", project: "서울 노량진5구역 재개발",        general: 284,  total: 727 },
+  { builder: "대우건설", period: "12월", region: "경기", project: "수원 당수2 B1블록 민간참여",   general: 705,  total: 374 },
+
+  // ── DL이앤씨 ───────────────────────────────────────────
+  { builder: "DL이앤씨", period: "1월", region: "서울", project: "아크로 드 서초",                 general: 56,   total: 1161 },
+  { builder: "DL이앤씨", period: "1월", region: "부산", project: "e센텀 하이베뉴",                 general: 166,  total: 924 },
+  { builder: "DL이앤씨", period: "1월", region: "경기", project: "e편한세상 동탄역 어반원 오피스텔",   general: 120,  total: 120 },
+  { builder: "DL이앤씨", period: "2월", region: "전남", project: "e편한세상 여수글렌츠",            general: 81,   total: 1365 },
+  { builder: "DL이앤씨", period: "2월", region: "경기", project: "구리 수택e구역 재개발",           general: 566,  total: 1118 },
+  { builder: "DL이앤씨", period: "4월", region: "경기", project: "안양관양 공공주택",              general: 172,  total: 172 },
+  { builder: "DL이앤씨", period: "4월", region: "서울", project: "노량진8구역 재개발",             general: 289,  total: 987 },
+  { builder: "DL이앤씨", period: "4월", region: "경기", project: "부천 소사3구역",                general: 449,  total: 825 },
+  { builder: "DL이앤씨", period: "5월", region: "대전", project: "대전 용두2구역",                general: 513,  total: 794 },
+  { builder: "DL이앤씨", period: "5월", region: "부산", project: "부산 반여4구역",                general: 125,  total: 536 },
+  { builder: "DL이앤씨", period: "5월", region: "경기", project: "성남낙생 A-1BL 신희타",          general: 910,  total: 910 },
+  { builder: "DL이앤씨", period: "7월", region: "부산", project: "부산 에코델타12BL",             general: 652,  total: 652 },
+  { builder: "DL이앤씨", period: "10월", region: "경기", project: "성남 상대원2구역",             general: 1866, total: 4882 },
+
+  // ── GS건설 ─────────────────────────────────────────────
+  { builder: "GS건설", period: "1월", region: "경기", project: "북오산자이 리버블시티",      general: 1275, total: 1275 },
+  { builder: "GS건설", period: "2월", region: "경기", project: "구리 수택E구역 재개발",      general: 505,  total: 997 },
+  { builder: "GS건설", period: "3월", region: "인천", project: "산곡6구역",                general: 520,  total: 1028 },
+  { builder: "GS건설", period: "1분기", region: "경남", project: "창원자이더스카이",         general: 509,  total: 519 },
+  { builder: "GS건설", period: "1분기", region: "서울", project: "노량진6구역",             general: 185,  total: 765 },
+  { builder: "GS건설", period: "2분기", region: "서울", project: "목동 오피스텔(옛 KT부지)",  general: 658,  total: 658 },
+  { builder: "GS건설", period: "3분기", region: "서울", project: "중계본동 재개발(백사마을)", general: 1335, total: 3178 },
+
+  // ── 현대엔지니어링 (원자료: 총공급 / 일반분양 순) ────────────
+  { builder: "현대엔지니어링", period: "3월", region: "서울", project: "신반포22차 재건축",         general: 28,   total: 160 },
+  { builder: "현대엔지니어링", period: "4월", region: "인천", project: "인천 구월동 주상복합",       general: 496,  total: 496 },
+  { builder: "현대엔지니어링", period: "6월", region: "서울", project: "서울 시흥 기아차개발사업",   general: 299,  total: 299 },
+  { builder: "현대엔지니어링", period: "7월", region: "광주", project: "힐스테이트 중외공원 2차",    general: 649,  total: 862 },
+  { builder: "현대엔지니어링", period: "9월", region: "경남", project: "거제 옥포동 공동주택",       general: 1963, total: 1963 },
+  { builder: "현대엔지니어링", period: "9월", region: "울산", project: "울산KTX 역세권 주상복합",    general: 436,  total: 734 },
+  { builder: "현대엔지니어링", period: "9월", region: "경기", project: "수원 권선1 재건축",         general: 57,   total: 440 },
+  { builder: "현대엔지니어링", period: "10월", region: "경기", project: "수원 팔달1 재건축",        general: 683,  total: 1195 },
+  { builder: "현대엔지니어링", period: "12월", region: "대구", project: "대구 감삼동 죽전역 주상복합", general: 415,  total: 477 },
+
+  // ── SK에코플랜트 ───────────────────────────────────────
+  { builder: "SK에코플랜트", period: "1월", region: "서울", project: "드파인 연희",   general: 332, total: 959 },
+  { builder: "SK에코플랜트", period: "2월", region: "경기", project: "구리 수택E",     general: 449, total: 907 },
+  { builder: "SK에코플랜트", period: "1분기", region: "서울", project: "노량진6",      general: 185, total: 750 },
+  { builder: "SK에코플랜트", period: "미정", region: "경기", project: "의왕 부곡가",   general: 826, total: 1857 },
+  { builder: "SK에코플랜트", period: "미정", region: "광주", project: "광주신가",      general: 383, total: 708 },
+  { builder: "SK에코플랜트", period: "미정", region: "대전", project: "대전 중앙1",    general: 388, total: 558 },
+  { builder: "SK에코플랜트", period: "미정", region: "서울", project: "노량진2",      general: 180, total: 404 },
+
+  // ── 호반그룹 (호반건설/호반산업) ────────────────────────
+  { builder: "호반그룹", period: "1분기", region: "경북", project: "경산 상방공원 호반써밋 1단지", general: 1004, total: 1004 },
+  { builder: "호반그룹", period: "1분기", region: "경기", project: "시흥거모 B1",               general: 313,  total: 313 },
+  { builder: "호반그룹", period: "1분기", region: "서울", project: "서울 양재동 청년주택",        general: 224,  total: 224 },
+  { builder: "호반그룹", period: "2분기", region: "경기", project: "김포풍무역세권 C5",          general: 1136, total: 1136 },
+  { builder: "호반그룹", period: "2분기", region: "광주", project: "광주첨단 A7",               general: 356,  total: 356 },
+  { builder: "호반그룹", period: "2분기", region: "광주", project: "광주첨단 A8",               general: 449,  total: 449 },
+  { builder: "호반그룹", period: "3분기", region: "부산", project: "부산 초량3구역",            general: 236,  total: 432 },
+  { builder: "호반그룹", period: "3분기", region: "경기", project: "김포풍무역세권 B4",          general: 650,  total: 650 },
+  { builder: "호반그룹", period: "3분기", region: "경기", project: "평택고덕P3 A13BL",          general: 234,  total: 234 },
+  { builder: "호반그룹", period: "4분기", region: "경기", project: "군포10구역",               general: 950,  total: 1427 },
+
+  // ── 금호건설 ───────────────────────────────────────────
+  { builder: "금호건설", period: "3월", region: "경기", project: "남양주왕숙2A-1",        general: 426, total: 426 },
+  { builder: "금호건설", period: "4월", region: "경기", project: "안성당왕 2차",          general: 265, total: 530 },
+  { builder: "금호건설", period: "4월", region: "경기", project: "평택고덕A31·34·35블록",  general: 360, total: 360 },
+  { builder: "금호건설", period: "4월", region: "경북", project: "구미형곡",             general: 142, total: 770 },
+  { builder: "금호건설", period: "4월", region: "경기", project: "평택고덕A63",           general: 321, total: 321 },
+  { builder: "금호건설", period: "6월", region: "충남", project: "홍성오관",             general: 55,  total: 55 },
+  { builder: "금호건설", period: "7월", region: "경기", project: "시흥거모A4",            general: 173, total: 173 },
+  { builder: "금호건설", period: "7월", region: "경기", project: "시흥거모A6",            general: 245, total: 245 },
+  { builder: "금호건설", period: "10월", region: "충남", project: "천안봉명",            general: 902, total: 1272 },
+];
+
+/**
+ * 핫이슈/뉴스 — 정식 운영 시 언론사 RSS·네이버 뉴스 API로 자동 수집할 영역.
+ * 아래는 피드 구조 예시(placeholder). 실제 헤드라인 아님.
+ */
+window.NEWS_FEED = [
+  { source: "비즈워치", date: "2026-06-18", tag: "공급",   title: "[샘플] 하반기 서울 정비사업 분양 본격화…강남권 대단지 줄잇는다" },
+  { source: "연합뉴스", date: "2026-06-17", tag: "정책",   title: "[샘플] 분양가상한제 적용 단지 일정 조정 가능성…수요자 셈법 복잡" },
+  { source: "한국경제", date: "2026-06-16", tag: "시황",   title: "[샘플] 지방 미분양 누적 속 수도권 청약 양극화 심화" },
+  { source: "매일경제", date: "2026-06-15", tag: "마케팅", title: "[샘플] 사이버 모델하우스·3D 분양 마케팅 도입 확산" },
+];

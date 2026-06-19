@@ -1,10 +1,10 @@
 name: 분양 데이터 갱신
 
-# 매일 오전 6시(KST=UTC+9 → 21:00 UTC)에 청약홈 OpenAPI + RSS 재수집.
+# 매시간 정각에 청약홈 OpenAPI + RSS 재수집.
 # 수동 실행(workflow_dispatch)도 가능.
 on:
   schedule:
-    - cron: "0 21 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 permissions:

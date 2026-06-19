@@ -1,0 +1,39 @@
+name: 분양 데이터 갱신
+
+# 매일 오전 6시(KST=UTC+9 → 21:00 UTC)에 청약홈 OpenAPI + RSS 재수집.
+# 수동 실행(workflow_dispatch)도 가능.
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 데이터 수집
+        env:
+          # 공공데이터포털 일반 인증키(Decoding). 저장소 Settings → Secrets에 등록.
+          APPLYHOME_SERVICE_KEY: ${{ secrets.APPLYHOME_SERVICE_KEY }}
+        run: node scripts/fetch-data.js
+
+      - name: 변경분 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git add data/
+            git commit -m "chore(data): 분양 데이터 자동 갱신 ($(date -u +%Y-%m-%d))"
+            git push
+          else
+            echo "변경 없음"
+          fi

@@ -4,6 +4,8 @@
 (function () {
   "use strict";
 
+  // 데이터는 파이프라인 산출물(data/*.json)을 우선 사용하고,
+  // file:// 등 fetch 불가 환경에서는 시드(window.SUPPLY_DATA)로 폴백한다.
   var DATA = window.SUPPLY_DATA || [];
   var NEWS = window.NEWS_FEED || [];
 
@@ -163,10 +165,24 @@
   function renderNews() {
     var host = document.getElementById("news-list");
     host.innerHTML = NEWS.map(function (n) {
-      return '<div class="news-item"><span class="ntag">' + esc(n.tag) + '</span>' +
-        '<div><div class="nt">' + esc(n.title) + '</div>' +
-        '<div class="nmeta">' + esc(n.source) + ' · ' + esc(n.date) + '</div></div></div>';
+      var title = n.link
+        ? '<a class="nt" href="' + esc(n.link) + '" target="_blank" rel="noopener">' + esc(n.title) + '</a>'
+        : '<div class="nt">' + esc(n.title) + '</div>';
+      return '<div class="news-item"><span class="ntag">' + esc(n.tag || "뉴스") + '</span>' +
+        '<div>' + title +
+        '<div class="nmeta">' + esc(n.source || "") + (n.date ? ' · ' + esc(n.date) : '') + '</div></div></div>';
     }).join("");
+
+    // 실데이터(원문 링크 보유) 여부로 안내 문구 전환
+    var note = document.getElementById("news-note");
+    if (note) {
+      var live = NEWS.some(function (n) { return n.link; });
+      if (live) {
+        note.classList.add("live");
+        note.innerHTML = "✓ 한경·경향 <b>RSS 자동수집</b> 결과입니다(매시간 갱신). 제목 클릭 시 원문으로 이동합니다. " +
+          "(호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)";
+      }
+    }
   }
 
   function esc(s) {
@@ -177,13 +193,66 @@
 
   function refresh() { syncChips(); renderCards(); }
 
-  // ── init ───────────────────────────────────
-  document.addEventListener("DOMContentLoaded", function () {
+  // ── 이번 호 핵심(Editor's pick): 하반기 총가구 상위 3 ──
+  function renderPicks() {
+    var host = document.getElementById("picks");
+    if (!host) return;
+    var top = DATA.filter(function (d) { return isH2(d.period); })
+      .sort(function (a, b) { return b.total - a.total; }).slice(0, 3);
+    host.innerHTML = top.map(function (d, i) {
+      return '<a class="pick" href="#h2"><span class="rk">0' + (i + 1) + '</span>' +
+        '<div><div class="pt">' + esc(d.project) + '</div>' +
+        '<div class="pm">' + esc(d.builder) + ' · ' + esc(d.region) + ' · ' + esc(d.period) + '</div></div>' +
+        '<span class="pv">' + d.total.toLocaleString() + '<small>총가구</small></span></a>';
+    }).join("");
+  }
+
+  // ── 하반기 월별 공급 분포 (CSS 바) ──────────
+  function renderTimeline() {
+    var host = document.getElementById("timeline");
+    if (!host) return;
+    var buckets = ["7월", "8월", "9월", "10월", "11월", "12월", "3분기", "4분기"];
+    var agg = {};
+    buckets.forEach(function (b) { agg[b] = 0; });
+    DATA.forEach(function (d) { if (agg[d.period] != null) agg[d.period] += d.total; });
+    var max = Math.max.apply(null, buckets.map(function (b) { return agg[b]; })) || 1;
+    host.innerHTML = buckets.map(function (b) {
+      var pct = Math.round((agg[b] / max) * 100);
+      return '<div class="tl-row"><span class="tl-lbl">' + b + '</span>' +
+        '<span class="tl-bar"><i style="width:' + pct + '%"></i></span>' +
+        '<span class="tl-val">' + agg[b].toLocaleString() + '</span></div>';
+    }).join("");
+  }
+
+  function setFreshness(meta) {
+    var el = document.getElementById("freshness");
+    if (!el || !meta) return;
+    var d = meta.generatedAt ? meta.generatedAt.slice(0, 10) : "—";
+    el.textContent = "데이터 기준 " + d + " · " + (meta.source || "");
+  }
+
+  function boot() {
     document.getElementById("today").textContent = new Date().toISOString().slice(0, 10);
     renderKPIs();
     buildFilters();
     renderCards();
     renderAccordion();
     renderNews();
+    renderPicks();
+    renderTimeline();
+  }
+
+  // ── init: JSON 우선, 실패 시 시드 폴백 ──────
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof fetch !== "function" || location.protocol === "file:") { boot(); return; }
+    Promise.all([
+      fetch("data/projects.json").then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      fetch("data/news.json").then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+    ]).then(function (res) {
+      var pj = res[0], nj = res[1];
+      if (pj && pj.projects && pj.projects.length) { DATA = pj.projects; setFreshness(pj); }
+      if (nj && nj.items && nj.items.length) { NEWS = nj.items; }
+      boot();
+    }).catch(function () { boot(); });
   });
 })();

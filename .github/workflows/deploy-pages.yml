@@ -1,0 +1,32 @@
+name: GitHub Pages 배포
+
+# 정적 사이트를 GitHub Pages로 배포.
+# 최초 1회: 저장소 Settings → Pages → Source를 "GitHub Actions"로 설정해야 함.
+on:
+  push:
+    branches: ["claude/pensive-lamport-onfeha", "main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -47,6 +47,7 @@
         세일즈 포인트까지 붙였습니다.
       </p>
       <div class="meta">자료: 비즈워치(B!z watch) 인포그래픽 · 각사 IR/보도자료(2026.02 기준) · 추정치로 변동 가능</div>
+      <div class="meta" id="freshness"></div>
 
       <div class="kpis">
         <div class="kpi"><div class="num" id="kpi-projects">—</div><div class="lbl">하반기 분양 단지 수</div></div>
@@ -56,6 +57,22 @@
       </div>
     </div>
   </div>
+
+  <!-- 이번 호 핵심 + 하반기 월별 분포 -->
+  <section class="block" id="brief">
+    <div class="wrap">
+      <div class="brief-grid">
+        <div>
+          <div class="sec-head"><h2>이번 호 핵심 Pick</h2><span class="desc">하반기 총가구 상위 단지</span></div>
+          <div class="picks" id="picks"></div>
+        </div>
+        <div>
+          <div class="sec-head"><h2>하반기 월별 공급 분포</h2><span class="desc">총가구 기준</span></div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 하반기 분양 사업지 -->
   <section class="block" id="h2">
@@ -98,9 +115,9 @@
         <span class="desc">정식 운영 시 언론사 RSS·뉴스 API 자동 수집 영역</span>
       </div>
       <div class="news" id="news-list"></div>
-      <div class="note">
-        ⚠ 아래 헤드라인은 <b>피드 구조 예시(샘플)</b>입니다. 실제 운영에서는 연합뉴스·한경·매경·비즈워치 등의
-        <b>RSS</b> 또는 네이버 뉴스 검색 API로 자동 수집을 권장합니다. (호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)
+      <div class="note" id="news-note">
+        ⚠ 아래 헤드라인은 <b>피드 구조 예시(샘플)</b>입니다. 실제 운영에서는 한경·경향 등의
+        <b>RSS</b>로 자동 수집됩니다. (호갱노노 등 약관상 크롤링 금지 소스는 사용하지 않음)
       </div>
     </div>
   </section>

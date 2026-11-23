@@ -1,26 +1,61 @@
 {
-  "generatedAt": "2026-11-22T18:22:15.448Z",
+  "generatedAt": "2026-11-23T00:05:48.952Z",
   "items": [
     {
-      "source": "경향신문",
+      "source": "한국경제",
       "tag": "부동산",
-      "title": "2023년 전세 계약한 서울 6만4000가구…내년 이사 땐 보증금 평균 36% 더 필요",
-      "link": "https://www.khan.co.kr/article/202611222116015/?utm_source=khan_rss&amp;utm_medium=rss&amp;utm_campaign=economy_news",
-      "date": ""
+      "title": "3기 신도시 첫 집들이 하는데…12월 전국 입주물량 '반토막'",
+      "link": "https://www.hankyung.com/article/2026112330506",
+      "date": "2026-11-22"
     },
     {
-      "source": "경향신문",
+      "source": "한국경제",
       "tag": "부동산",
-      "title": "이승로 성북구청장 “대통령도 관심…‘장위9구역’ 재개발 모범 사례 만들 것”",
-      "link": "https://www.khan.co.kr/article/202611222044005/?utm_source=khan_rss&amp;utm_medium=rss&amp;utm_campaign=economy_news",
-      "date": ""
+      "title": "강남 아파트 가격은 '뚝'…서울 부동산에 벌어진 '반전' [시장톡]",
+      "link": "https://www.hankyung.com/article/2026112090556",
+      "date": "2026-11-22"
     },
     {
-      "source": "경향신문",
+      "source": "한국경제",
       "tag": "부동산",
-      "title": "국토부, 주택공시가 현실화율 ‘동결’…묶여도 집값 오른 곳 보유세는 오를 듯",
-      "link": "https://www.khan.co.kr/article/202611202007001/?utm_source=khan_rss&amp;utm_medium=rss&amp;utm_campaign=economy_news",
-      "date": ""
+      "title": "\"송파·동작·용산 아파트 안팔려요\"…'상급지 갈아타기' 전략은",
+      "link": "https://www.hankyung.com/article/2026112223961",
+      "date": "2026-11-22"
+    },
+    {
+      "source": "한국경제",
+      "tag": "부동산",
+      "title": "\"내년 수도권 집값 3~5% 상승…전셋값은 8% 뛸 것\"",
+      "link": "https://www.hankyung.com/article/2026112224191",
+      "date": "2026-11-22"
+    },
+    {
+      "source": "한국경제",
+      "tag": "부동산",
+      "title": "정부, 공급 확대 '전격전'…연말 1.2만가구 공공분양",
+      "link": "https://www.hankyung.com/article/2026112224181",
+      "date": "2026-11-22"
+    },
+    {
+      "source": "한국경제",
+      "tag": "부동산",
+      "title": "집 넓히면 억대 분담금, 줄이면 환급…재건축 '큰집 불패' 깨졌다",
+      "link": "https://www.hankyung.com/article/2026112224701",
+      "date": "2026-11-22"
+    },
+    {
+      "source": "한국경제",
+      "tag": "부동산",
+      "title": "'더 넓게'서 '덜 내자'로…재건축 小小익선 시대",
+      "link": "https://www.hankyung.com/article/2026112225171",
+      "date": "2026-11-22"
+    },
+    {
+      "source": "한국경제",
+      "tag": "부동산",
+      "title": "'국평'마저 부담…청약시장도 소형이 대세",
+      "link": "https://www.hankyung.com/article/2026112224681",
+      "date": "2026-11-22"
     }
   ]
 }

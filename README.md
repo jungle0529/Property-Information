@@ -18,12 +18,35 @@ python3 -m http.server 8080   # → http://localhost:8080
 ## 구조
 
 ```
-index.html              # 뉴스레터 페이지 (kmjournal.net 풍 미니멀 에디토리얼)
-assets/css/style.css    # 디자인 토큰·레이아웃
-assets/js/data.js       # 분양 공급계획 시드 데이터 + 뉴스 피드(샘플)
-assets/js/app.js        # 필터/카드/테이블/KPI 렌더링
-docs/data-sources.md    # 데이터 소스 전략 (호갱노노 대안 포함)
+index.html                     # 뉴스레터 페이지 (kmjournal.net 풍 미니멀 에디토리얼)
+assets/css/style.css           # 디자인 토큰·레이아웃
+assets/js/data.js              # 시드 데이터 + 뉴스 샘플 (오프라인/file:// 폴백)
+assets/js/app.js               # 필터/카드/테이블/KPI/Pick/타임라인 렌더링
+data/projects.json             # 파이프라인 산출물(분양 일정·세대수) — 페이지가 우선 사용
+data/news.json                 # 파이프라인 산출물(핫이슈 피드)
+scripts/fetch-data.js          # 청약홈 OpenAPI + RSS 수집 → data/*.json
+.github/workflows/update-data.yml  # 매일 자동 갱신(스케줄/수동)
+docs/data-sources.md           # 데이터 소스 전략 (호갱노노 대안 포함)
 ```
+
+데이터 로딩은 **점진적 향상(progressive enhancement)** 방식입니다. HTTP로 서빙되면
+`data/projects.json`·`data/news.json`을 우선 사용하고, `file://`로 직접 열면 `data.js`
+시드로 폴백합니다. 페이지는 어느 경우에도 동작합니다.
+
+## 데이터 자동 수집
+
+```
+# 시드로 산출(키 없이도 유효 JSON 생성)
+node scripts/fetch-data.js
+
+# 청약홈 OpenAPI 실수집 (공공데이터포털 일반 인증키 필요)
+APPLYHOME_SERVICE_KEY="발급키" node scripts/fetch-data.js
+```
+
+- 키는 공공데이터포털 → 청약홈 분양정보 조회 서비스(15098547) 활용신청 후 발급.
+- CI 자동화: 저장소 **Settings → Secrets**에 `APPLYHOME_SERVICE_KEY` 등록 →
+  `.github/workflows/update-data.yml`이 매일 갱신·커밋.
+- ⚠ 응답 필드명/RSS 주소는 운영 전 Swagger·각 언론사 RSS로 **대조(확인 필요)**.
 
 ## 데이터는 어디서 가져오나 (요약)
 
